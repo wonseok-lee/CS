@@ -4,7 +4,7 @@ v, e = map(int, sys.stdin.readline().split())
 arr = []
 for _ in range(e):
     a, b, w = map(int, sys.stdin.readline().split())
-    arr.append((c,a,b))
+    arr.append((w,a,b))
 
 arr.sort(key=lambda x: x[0])
 parent = list(range(v + 1))
