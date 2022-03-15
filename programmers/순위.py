@@ -15,5 +15,6 @@ def solution(n, results):
             lose[loser].update(lose[i])
 
     for i in range(1, n+1):
-        if len(win[i]) + len(lose[i]) == n - 1: answer += 1
+        if len(win[i]) + len(lose[i]) == n - 1:
+            answer += 1
     return answer
