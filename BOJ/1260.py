@@ -1,30 +1,50 @@
-N, M, V = map(int, input().split())
-matrix = [[0] * (N + 1) for _ in range(N + 1)]
-for _ in range(M):
-    link = list(map(int, input().split()))
-    matrix[link[0]][link[1]] = 1
-    matrix[link[1]][link[0]] = 1
+# 4 5 1
+# 1 2
+# 1 3
+# 1 4
+# 2 4
+# 3 4
 
+import sys
+from collections import deque, defaultdict
+input=sys.stdin.readline
+output=sys.stdout.write
 
-def dfs(current_node, row, foot_prints):
-    foot_prints += [current_node]
-    for search_node in range(len(row[current_node])):
-        if row[current_node][search_node] and search_node not in foot_prints:
-            foot_prints = dfs(search_node, row, foot_prints)
-    return foot_prints
+n,m,start=map(int,input().split())
+matrix=defaultdict(list)
+for _ in range(m):
+    x,y=map(int,input().split())
+    matrix[x].append(y)
+    matrix[y].append(x)
 
+for i in range(1,n+1):
+    matrix[i]=sorted(matrix[i])
 
-def bfs(start):
-    queue = [start]
-    foot_prints = [start]
+visited=[False for _ in range(n+1)]
+
+def dfs(v):
+    visited[v]=True
+    # print(v)
+    output(str(v)+' ')
+    for i in matrix[v]:
+        if visited[i]==True:
+            continue
+        dfs(i)
+
+def bfs(v):
+    visited=[False for _ in range(n+1)]
+    queue=deque([v])
+    visited[v]=True
     while queue:
-        current_node = queue.pop(0)
-        for search_node in range(len(matrix[current_node])):
-            if matrix[current_node][search_node] and search_node not in foot_prints:
-                foot_prints += [search_node]
-                queue += [search_node]
-    return foot_prints
+        node=queue.popleft()
+        # print(node)
+        output(str(node)+' ')
+        for nxt_node in matrix[node]:
+            if visited[nxt_node]==True:
+                continue
+            visited[nxt_node]=True
+            queue.append(nxt_node)
 
-
-print(*dfs(V, matrix, []))
-print(*bfs(V))
+dfs(start)
+print()
+bfs(start)
