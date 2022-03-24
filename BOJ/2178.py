@@ -1,25 +1,43 @@
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
- 
-n, m = map(int, input().split())
-a = [list(map(int, list(input()))) for _ in range(n)]
-q = deque()
-check = [[False]*m for _ in range(n)]
-dist = [[0]*m for _ in range(n)]
- 
-# 시작점
-q.append((0,0))
-check[0][0] = True
-dist[0][0] = 1
- 
-while q:
-    x, y = q.popleft()
-    for k in range(4):
-        nx, ny = x+dx[k], y+dy[k]
-        if 0 <= nx < n and 0 <= ny < m:
-            if check[nx][ny] == False and a[nx][ny] == 1:
-                q.append((nx,ny))
-                dist[nx][ny] = dist[x][y] + 1
-                check[nx][ny] = True
- 
-print(dist[n-1][m-1])
+# 4 6
+# 101111
+# 101010
+# 101011
+# 111011
+
+import sys
+from collections import deque
+
+input=sys.stdin.readline
+
+n,m=map(int,input().split())
+matrix=[input().strip() for _ in range(n)]
+dirs=[[1,0],[-1,0],[0,1],[0,-1]]
+visited=[[0 for _ in range(m)] for _ in range(n)]
+
+def bfs():
+    queue=deque()
+    queue.append((0,0))
+    visited[0][0]=1
+    while queue:
+        x,y=queue.popleft()
+        for dx,dy in dirs:
+            nx=x+dx
+            ny=y+dy
+            if nx<0 or n<=nx or ny<0 or m<=ny:
+                continue
+            if matrix[nx][ny]=='0':
+                continue
+            if visited[nx][ny]!=0:
+                continue
+            visited[nx][ny]=visited[x][y]+1
+            queue.append((nx,ny))
+
+bfs()
+print(visited[n-1][m-1])
+
+
+
+
+
+
+

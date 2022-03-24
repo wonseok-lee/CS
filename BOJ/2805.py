@@ -8,7 +8,7 @@ input=sys.stdin.readline
 n,h=map(int,input().split())
 trees=sorted(list(map(int,input().split())))
 
-left,right=0,sys.maxsize
+left,right=0,max(trees)
 answer=0
 
 while left<=right:
@@ -18,20 +18,12 @@ while left<=right:
     for tree in trees:
         if tree>=mid:
             temp+=tree-mid
+
     if temp<=h:
-        answer=mid
+        
         right=mid-1
     else:
+        answer=mid
         left=mid+1
 
 print(answer)
-
-
-
-
-
-
-
-
-
-
