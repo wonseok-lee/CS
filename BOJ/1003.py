@@ -1,17 +1,22 @@
-a = int(input())
+# 2
+# 6
+# 22
+import sys
 
-dp = []
-dp.append((1, 0))
-dp.append((0, 1))
-dp.append((1, 1))
+input=sys.stdin.readline
+trial=int(input())
 
-for i in range(3, 41) :
-    p2 = dp[i-2]
-    p1 = dp[i-1]
+dp=[[0,0] for _ in range(40+1)]
+dp[0]=[1,0]
+dp[1]=[0,1]
+dp[2]=[1,1]
 
-    y, x = p2[0] + p1[0], p2[1] + p1[1]
-    dp.append((y, x))
+for i in range(3,41):
+    dp[i][0]=dp[i-1][0]+dp[i-2][0]
+    dp[i][1]=dp[i-1][1]+dp[i-2][1]
 
-for _ in range(a) :
-    n = int(input())
-    print(' '.join(map(str, dp[n])))
+while trial:
+    n=int(input())
+    x,y=dp[n][0],dp[n][1]
+    print(str(x)+' '+str(y))
+    trial-=1
